@@ -1,0 +1,93 @@
+<div class="bg-black h-[100vh]">
+  <div class="bg-btn h-[222px]"></div>
+  <div class="bg-white w-[90%] max-w-[1000px] mx-auto py-5 -translate-y-20 rounded">
+    <p
+      class="text-red-500 text-xs text-center"
+      *ngIf="errorMessage"
+    >{{errorMessage}}</p>
+    <!-- form -->
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="loginForm.status !== 'INVALID' && onSubmit()"
+    >
+      <div class="p-10 flex flex-col gap-4 max-w-[50%] mx-auto">
+        <div class="">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          >
+            Email
+          </label>
+          <input
+            [ngClass]="{
+              'border border-red-500':
+                getControl('email')?.invalid &&
+                (getControl('email')?.dirty || getControl('email')?.touched)
+            }"
+            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full mb-3 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-btnHover"
+            type="text"
+            placeholder="jane@gamil.com"
+            formControlName="email"
+          />
+          <p
+            class="text-red-500 text-xs"
+            *ngIf="getControl('email')?.errors?.['required'] &&
+                (getControl('email')?.dirty ||
+                getControl('email')?.touched) "
+          >
+            Email is required
+          </p>
+
+          <p
+            class="text-red-500 text-xs"
+            *ngIf="
+              getControl('email')?.hasError('email') &&
+              (getControl('email')?.dirty || getControl('email')?.touched)
+            "
+          >
+            Email is not valid
+          </p>
+        </div>
+
+        <div class="">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          >
+            Password
+          </label>
+          <input
+            [ngClass]="{
+              'border border-red-500':
+                getControl('password')?.invalid &&
+                (getControl('password')?.dirty ||
+                  getControl('password')?.touched)
+            }"
+            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full mb-3 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-btnHover"
+            type="password"
+            placeholder="*****"
+            name="password"
+            formControlName="password"
+          />
+          <p
+            class="text-red-500 text-xs"
+            *ngIf="
+              getControl('password')?.errors?.['required'] &&
+              (getControl('password')?.dirty ||
+                getControl('password')?.touched) 
+            "
+          >
+            Password is required
+          </p>
+        </div>
+        <button
+          class="self-center bg-btn hover:bg-btnHover text-white font-bold py-2 px-4 rounded-full"
+        >
+          Login
+        </button>
+        <p class="text-sm text-center">
+          Don't have an account? <a routerLink="/register">Register here</a>
+        </p>
+      </div>
+    </form>
+    <!-- end form -->
+  </div>
+</div>

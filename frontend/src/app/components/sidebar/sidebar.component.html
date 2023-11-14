@@ -1,0 +1,89 @@
+<!-- top bar -->
+<div class="bg-primary py-2 px-4 flex justify-between items-center">
+  <div class="flex items-center gap-4">
+    <img
+      src="/assets/default.jpg"
+      alt="profile picture"
+      class="w-[40px] h-[40px] object-cover rounded-full"
+    />
+    <h3 class="text-white font-bold">{{user.username | titlecase}}</h3>
+  </div>
+  <fa-icon
+    [icon]="exitIcon"
+    class="text-slate-700 ml-4 cursor-pointer"
+    (click)="logout()"
+  >
+  </fa-icon>
+</div>
+<!-- sidebar -->
+<div class="">
+  <!-- search bar -->
+  <div class="flex justify-between items-center py-2 px-4">
+    <input
+      [(ngModel)]="searchValue"
+      (ngModelChange)="onSearchChange()"
+      type="text"
+      placeholder="Search new chat"
+      class="outline-none text-white bg-input py-1 px-10 rounded flex-1"
+    />
+    <fa-icon
+      [icon]="filterIcon"
+      class="text-slate-700 ml-4 cursor-pointer"
+    ></fa-icon>
+  </div>
+  <!-- users -->
+  <div
+    class="flex flex-col overflow-y-auto"
+    style="max-height: calc(100vh - 105px)"
+  >
+    <ng-container *ngIf="matchingUsers.length > 0; else recentChats">
+      <!-- user -->
+      <div
+        class="flex gap-4 hover:bg-primary py-2 px-4 cursor-pointer border-b border-slate-800"
+        *ngFor="let user of matchingUsers"
+        (click)="selectUser(user)"
+      >
+        <img
+          src="/assets/default.jpg"
+          alt="profile picture"
+          class="w-[50px] h-[50px] object-cover rounded-full"
+        />
+        <div class="flex justify-between items-center flex-1">
+          <div class="flex flex-col text-white">
+            <h3 class="font-bold">{{ user.username | titlecase}}</h3>
+          </div>
+        </div>
+      </div>
+      <!-- user end -->
+    </ng-container>
+
+    <!-- recent chats -->
+    <ng-template #recentChats>
+      <!-- user -->
+      <div
+        class="flex gap-4 hover:bg-primary py-2 px-4 cursor-pointer border-b border-slate-800"
+        *ngFor="let conversation of conversations"
+        (click)="selectUser(conversation)"
+      >
+        <img
+          src="/assets/default.jpg"
+          alt="profile picture"
+          class="w-[50px] h-[50px] object-cover rounded-full"
+        />
+        <div class="flex justify-between items-center flex-1">
+          <div class="flex flex-col text-white">
+            <h3 class="font-bold">{{ conversation.username | titlecase }}</h3>
+            <!-- <small>Hello iffat</small> -->
+          </div>
+          <!-- <div
+            class="bg-btn rounded-full self-center h-[20px] w-[20px] flex items-center justify-center"
+          >
+            <small>1</small>
+          </div> -->
+        </div>
+      </div>
+      <!-- user end -->
+    </ng-template>
+  </div>
+  <!-- users ends -->
+</div>
